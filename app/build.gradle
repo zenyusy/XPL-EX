@@ -32,12 +32,7 @@ android {
 
         // Keys from release are being used anyway but whatever
         debug {
-            if (System.getenv('GITHUB_WORKSPACE') != null) {
-                storeFile file("${System.getenv('GITHUB_WORKSPACE')}/KEYSTORE.JKS")
-                storePassword System.getenv('KEYSTORE_PASSWORD')
-                keyAlias System.getenv('KEY_ALIAS')
-                keyPassword System.getenv('KEY_PASSWORD')
-            }
+            // empty
         }
     }
 
