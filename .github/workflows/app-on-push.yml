@@ -59,35 +59,6 @@ jobs:
           echo "debug_apk_path=$debug_apk" >> $GITHUB_OUTPUT
           echo "debug_apk_filename=$debug_apk_filename" >> $GITHUB_OUTPUT
 
-
-      - name: Send commit info to Telegram
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_CHANNEL_ID}}
-          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          message: |
-            New commit from: ${{ github.actor }}
-            Commit message: ${{ github.event.commits[0].message }}
-            
-            Changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
-
-      - name: Upload Release APK to Telegram
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_CHANNEL_ID }}
-          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          message: ' '
-          document: ${{ steps.find-release-apk.outputs.release_apk_path }}
-
-      - name: Upload Debug APK to Telegram
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_CHANNEL_ID }}
-          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          message: ' '
-          document: ${{ steps.find-debug-apk.outputs.debug_apk_path }}
-
-
       - name: Upload Release files to Artifacts
         uses: actions/upload-artifact@v4
         with:
