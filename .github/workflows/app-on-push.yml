@@ -27,29 +27,11 @@ jobs:
           distribution: 'corretto'
           java-version: '11'
 
-      - name: Decode the Keystore
-        env:
-          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
-        run: |
-          echo "$KEYSTORE_BASE64" | base64 --decode > $GITHUB_WORKSPACE/KEYSTORE.JKS
-
-
-      - name: Build Release APK
-        run: |
-          ./gradlew clean assembleRelease 
 
       - name: Build Debug APK
         run: |
           ./gradlew assembleDebug
 
-
-      - name: Find Release APK file
-        id: find-release-apk
-        run: |
-          release_apk=$(ls -t $GITHUB_WORKSPACE/app/build/outputs/apk/release/*.apk | head -n1)
-          release_apk_filename=$(basename "$release_apk" .apk)
-          echo "release_apk_path=$release_apk" >> $GITHUB_OUTPUT
-          echo "release_apk_filename=$release_apk_filename" >> $GITHUB_OUTPUT
 
       - name: Find Debug APK file
         id: find-debug-apk
@@ -59,11 +41,6 @@ jobs:
           echo "debug_apk_path=$debug_apk" >> $GITHUB_OUTPUT
           echo "debug_apk_filename=$debug_apk_filename" >> $GITHUB_OUTPUT
 
-      - name: Upload Release files to Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ steps.find-release-apk.outputs.release_apk_filename }}
-          path: app/build/outputs/apk/release/
 
       - name: Upload Debug files to Artifacts
         uses: actions/upload-artifact@v4
