@@ -70,7 +70,7 @@ android {
             useProguard = false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             if (signingConfigs.release.storeFile) {
-                signingConfig signingConfigs.release
+                signingConfig signingConfigs.debug
             }
         }
     }
